@@ -4,6 +4,7 @@ import Statement from "@/components/Statement";
 import ProductShowcase from "@/components/ProductShowcase";
 import Essentialized from "@/components/Essentialized";
 import Discover from "@/components/Discover";
+import StyleOutlook from "@/components/StyleOutlook";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <ProductShowcase />
       <Essentialized />
       <Discover />
+      <StyleOutlook />
     </main>
   );
 }

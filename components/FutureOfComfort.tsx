@@ -1,25 +1,24 @@
 "use client";
 
-import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-// Placeholder — swap for the real campaign photo when ready
-const BANNER_IMAGE =
-  "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1600&q=80";
+// Mixkit free stock — fashion runway catwalk
+const BANNER_VIDEO =
+  "https://assets.mixkit.co/videos/52270/52270-720.mp4"; // model on runway
 
 export default function FutureOfComfort() {
   return (
     <section className="bg-neutral-950 px-3 pb-8 sm:px-6 sm:pb-12 lg:px-8 lg:pb-16">
       <div className="relative mx-auto h-screen max-w-[1400px] overflow-hidden rounded-3xl">
-        <Image
-          src={BANNER_IMAGE}
-          alt="Model wearing an oversized purple jacket"
-          fill
-          priority
-          sizes="(max-width: 1400px) 100vw, 1400px"
-          className="object-cover"
+        <video
+          src={BANNER_VIDEO}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
 

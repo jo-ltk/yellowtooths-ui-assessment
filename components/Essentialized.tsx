@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
+import CircularText from "./CircularText";
 
 const products = [
-  { key: "tees", name: "Tees" },
-  { key: "hoodie", name: "Hoodie" },
-  { key: "pants", name: "Pants" },
+  { key: "tees", name: "Tees", text: "TEES*TEES*TEES*" },
+  { key: "hoodie", name: "Hoodie", text: "HOODIE*HOODIE*" },
+  { key: "pants", name: "Pants", text: "PANTS*PANTS*" },
 ] as const;
 
 const images = {
@@ -15,6 +15,13 @@ const images = {
     "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1600&auto=format&fit=crop",
   pants:
     "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=1600&auto=format&fit=crop",
+};
+
+// Mixkit free stock — fashion modelling / apparel only
+const videos = {
+  tees: "https://assets.mixkit.co/videos/805/805-720.mp4", // model in black dress
+  hoodie: "https://assets.mixkit.co/videos/806/806-720.mp4", // studio dress modelling
+  pants: "https://assets.mixkit.co/videos/809/809-720.mp4", // fashion mirrors look
 };
 
 export default function Essentialized() {
@@ -59,14 +66,16 @@ export default function Essentialized() {
         </div>
 
         <div className="relative mt-6 h-[380px] w-full overflow-hidden rounded-2xl sm:mt-8 sm:h-[460px] lg:h-[560px]">
-          {(Object.keys(images) as Array<keyof typeof images>).map((key) => (
-            <Image
+          {(Object.keys(videos) as Array<keyof typeof videos>).map((key) => (
+            <video
               key={key}
-              src={images[key]}
-              alt={`${key} campaign photo`}
-              fill
-              priority={key === "tees"}
-              className={`object-cover transition-opacity duration-700 ease-out ${
+              src={videos[key]}
+              poster={images[key]}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out ${
                 active === key ? "opacity-100" : "opacity-0"
               }`}
             />
@@ -79,7 +88,7 @@ export default function Essentialized() {
             Buy Now
           </a>
 
-          <div className="absolute bottom-4 right-4 z-10 hidden gap-2 sm:bottom-6 sm:right-6 sm:flex lg:bottom-8 lg:right-8">
+          <div className="absolute bottom-4 right-4 z-10 hidden items-end gap-3 sm:bottom-6 sm:right-6 sm:flex lg:bottom-8 lg:right-8 lg:gap-4">
             {products.map((item) => {
               const isActive = active === item.key;
               return (
@@ -88,30 +97,19 @@ export default function Essentialized() {
                   type="button"
                   onClick={() => setActive(item.key)}
                   aria-pressed={isActive}
-                  className={`group flex w-16 flex-col items-center gap-1.5 transition-all duration-300 ease-out lg:w-[72px] ${
-                    isActive ? "opacity-100" : "opacity-70 hover:opacity-100"
+                  aria-label={item.name}
+                  className={`rounded-full border-2 shadow-lg transition-all duration-300 ease-out ${
+                    isActive
+                      ? "scale-105 border-white bg-gray-900 opacity-100"
+                      : "border-white/50 bg-gray-900/70 opacity-85 hover:scale-105 hover:border-white hover:bg-gray-900 hover:opacity-100"
                   }`}
                 >
-                  <div
-                    className={`relative aspect-square w-full overflow-hidden rounded-2xl bg-stone-100 transition-transform duration-300 ease-out ${
-                      isActive ? "scale-105 shadow-sm" : "group-hover:scale-105"
-                    }`}
-                  >
-                    <Image
-                      src={images[item.key]}
-                      alt={`${item.name} preview`}
-                      fill
-                      sizes="72px"
-                      className="object-cover"
-                    />
-                  </div>
-                  <span
-                    className={`font-serif text-[10px] font-light tracking-wide lg:text-[11px] ${
-                      isActive ? "text-gray-900" : "text-gray-500"
-                    }`}
-                  >
-                    {item.name}
-                  </span>
+                  <CircularText
+                    text={item.text}
+                    spinDuration={isActive ? 12 : 20}
+                    onHover="speedUp"
+                    className="!mx-0 h-20 w-20 text-[9px] text-white lg:h-24 lg:w-24 lg:text-[10px]"
+                  />
                 </button>
               );
             })}

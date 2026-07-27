@@ -1,15 +1,26 @@
+import Image from "next/image";
+
+const images = {
+  goldDust:
+    "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1600&q=85",
+  womens:
+    "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1600&q=85",
+};
+
 export default function ProductShowcase() {
   return (
     <section className="mx-auto max-w-[1400px] px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8 lg:pb-28">
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-8">
         {/* Card 1 */}
         <div className="flex flex-col items-center">
-          <div className="flex h-64 w-full items-center justify-center overflow-hidden rounded-2xl bg-stone-100 sm:h-80 lg:h-96">
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-stone-100 via-amber-50 to-stone-200">
-              <span className="px-6 text-center font-display text-sm italic text-gray-400">
-                Replace with product photograph
-              </span>
-            </div>
+          <div className="relative h-64 w-full overflow-hidden rounded-2xl bg-stone-100 sm:h-80 lg:h-96">
+            <Image
+              src={images.goldDust}
+              alt="Gold Dust & Cracked Perfumes"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
           </div>
 
           <h3 className="mt-8 font-display text-2xl font-light text-gray-900 sm:text-3xl">
@@ -28,12 +39,14 @@ export default function ProductShowcase() {
 
         {/* Card 2 */}
         <div className="flex flex-col items-center">
-          <div className="flex h-64 w-full items-center justify-center overflow-hidden rounded-2xl bg-stone-100 sm:h-80 lg:h-96">
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-stone-100 via-rose-50 to-stone-200">
-              <span className="px-6 text-center font-display text-sm italic text-gray-400">
-                Replace with product photograph
-              </span>
-            </div>
+          <div className="relative h-64 w-full overflow-hidden rounded-2xl bg-stone-100 sm:h-80 lg:h-96">
+            <Image
+              src={images.womens}
+              alt="Women's Fragrances Perfumes"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
           </div>
 
           <h3 className="mt-8 font-display text-2xl font-light text-gray-900 sm:text-3xl">

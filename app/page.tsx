@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Statement from "@/components/Statement";
 import ProductShowcase from "@/components/ProductShowcase";
 import Essentialized from "@/components/Essentialized";
+import Discover from "@/components/Discover";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Statement />
       <ProductShowcase />
       <Essentialized />
+      <Discover />
     </main>
   );
 }

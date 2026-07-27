@@ -138,7 +138,7 @@ function StarRating({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex shrink-0 items-center gap-0.5 text-gray-900",
+        "flex shrink-0 items-center gap-0.5 text-amber-500",
         className,
       )}
     >
@@ -282,69 +282,70 @@ export default function Discover() {
           </div>
 
           {/* Product grid */}
-          <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product) => (
               <article
                 key={product.id}
-                className="group relative z-0 transition-[z-index] duration-0 hover:z-20"
+                className="group flex flex-col overflow-hidden rounded-[1.75rem] bg-white shadow-[0_1px_2px_rgba(15,15,15,0.04),0_12px_28px_-16px_rgba(15,15,15,0.12)] ring-1 ring-black/[0.04] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_1px_2px_rgba(15,15,15,0.06),0_28px_48px_-20px_rgba(15,15,15,0.22)]"
               >
-                {/* One continuous card — expands down over the meta on hover */}
-                <div className="overflow-hidden rounded-2xl transition-shadow duration-300 ease-out group-hover:bg-white group-hover:shadow-xl group-hover:ring-2 group-hover:ring-[#f08a2e]">
-                  <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-stone-100 group-hover:rounded-none group-hover:rounded-t-2xl">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 280px"
-                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                    />
+                {/* Image */}
+                <div className="relative aspect-[4/5] w-full overflow-hidden bg-stone-100">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 280px"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                  />
 
-                    <WishlistButton
-                      product={{
-                        id: product.id,
-                        name: product.name,
-                        price: product.price,
-                        image: product.image,
-                      }}
-                    />
+                  {/* subtle top scrim so the wishlist icon stays legible on any photo */}
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-                    <button
-                      type="button"
-                      aria-label={`View ${product.name}`}
-                      className="absolute right-4 bottom-4 z-10 flex size-10 translate-y-2 items-center justify-center rounded-full bg-white text-gray-950 opacity-0 shadow-md transition-all duration-300 hover:scale-105 group-hover:translate-y-0 group-hover:opacity-100 sm:right-5"
-                    >
-                      <ArrowUpRight className="size-4" strokeWidth={2} />
-                    </button>
+                  <WishlistButton
+                    product={{
+                      id: product.id,
+                      name: product.name,
+                      price: product.price,
+                      image: product.image,
+                    }}
+                  />
+
+                  <button
+                    type="button"
+                    aria-label={`View ${product.name}`}
+                    className="absolute right-4 bottom-4 z-10 flex size-10 translate-y-2 items-center justify-center rounded-full bg-white text-gray-950 opacity-0 shadow-md transition-all duration-300 hover:scale-105 group-hover:translate-y-0 group-hover:opacity-100"
+                  >
+                    <ArrowUpRight className="size-4" strokeWidth={2} />
+                  </button>
+                </div>
+
+                {/* Meta */}
+                <div className="flex flex-1 flex-col px-5 pt-4 pb-5">
+                  <div className="flex items-start justify-between gap-3">
+                    <h4 className="font-geist text-[15px] leading-snug font-semibold tracking-tight text-gray-900">
+                      {product.name}
+                    </h4>
+                    <StarRating className="mt-1" />
                   </div>
 
-                  {/* Meta sits under the image; on hover it becomes the card’s bottom panel */}
-                  <div className="bg-transparent px-0 pt-4 transition-all duration-300 ease-out group-hover:bg-white group-hover:px-5 group-hover:pt-4 group-hover:pb-4">
-                    <div className="flex items-start justify-between gap-2">
-                      <h4 className="font-geist text-sm font-medium leading-snug text-gray-900 transition-all group-hover:max-w-[12rem] group-hover:text-base group-hover:font-semibold sm:text-base">
-                        {product.name}
-                      </h4>
-                      <StarRating className="mt-0.5" />
-                    </div>
-
-                    <div className="mt-2 flex items-center justify-between transition-all group-hover:mt-3 group-hover:items-end">
-                      <span className="font-geist text-xl font-semibold text-gray-900 group-hover:order-2">
-                        {product.price}
-                      </span>
-                      <span className="font-geist text-xs text-gray-400 group-hover:order-1 group-hover:text-sm group-hover:text-gray-500">
-                        {product.sizeRange}
-                      </span>
-                    </div>
-
-                    <AddToCartButton
-                      product={{
-                        id: product.id,
-                        name: product.name,
-                        price: product.price,
-                        image: product.image,
-                      }}
-                      className="mt-3 group-hover:mt-3"
-                    />
+                  <div className="mt-auto flex items-end justify-between pt-4">
+                    <span className="font-geist text-xs font-medium tracking-wide text-gray-400 uppercase">
+                      {product.sizeRange}
+                    </span>
+                    <span className="font-geist text-2xl font-bold tracking-tight text-gray-900">
+                      {product.price}
+                    </span>
                   </div>
+
+                  <AddToCartButton
+                    product={{
+                      id: product.id,
+                      name: product.name,
+                      price: product.price,
+                      image: product.image,
+                    }}
+                    className="mt-4 w-full rounded-full"
+                  />
                 </div>
               </article>
             ))}

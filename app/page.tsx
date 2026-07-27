@@ -6,6 +6,8 @@ import Essentialized from "@/components/Essentialized";
 import Discover from "@/components/Discover";
 import StyleOutlook from "@/components/StyleOutlook";
 import EverydayComfort from "@/components/EverydayComfort";
+import FutureOfComfort from "@/components/FutureOfComfort";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -18,6 +20,8 @@ export default function Home() {
       <Discover />
       <StyleOutlook />
       <EverydayComfort />
+      <FutureOfComfort />
+      <Footer />
     </main>
   );
 }

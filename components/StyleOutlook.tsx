@@ -85,7 +85,7 @@ export default function StyleOutlook() {
   }, []);
 
   return (
-    <section className="bg-neutral-950 px-3 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+    <section className="bg-neutral-950 px-3 pt-8 pb-4 sm:px-6 sm:pt-12 lg:px-8 lg:pt-16">
       <div className="mx-auto max-w-[1400px] rounded-3xl bg-black px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12">
         {/* Header */}
         <div className="mb-8 grid grid-cols-1 gap-4 lg:mb-10 lg:grid-cols-[80px_1fr_300px] lg:items-start lg:gap-10">

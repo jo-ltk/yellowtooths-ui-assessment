@@ -13,44 +13,15 @@ export default function Navbar() {
   const { itemCount } = useCart();
   const count = items.length;
   const { scrollY } = useScroll();
-  const [isHidden, setIsHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() ?? 0;
-    const diff = latest - previous;
-    const threshold = 15;
-
     setIsScrolled(latest > 8);
-
-    if (latest < 80) {
-      // Always show near the top
-      setIsHidden(false);
-    } else if (diff < -threshold) {
-      // Scrolling up: hide
-      setIsHidden(true);
-    } else if (diff > threshold) {
-      // Scrolling down: show
-      setIsHidden(false);
-    }
   });
 
   return (
     <>
-      <motion.header
-        variants={{
-          visible: { y: 0, opacity: 1 },
-          hidden: { y: -110, opacity: 0 },
-        }}
-        initial="visible"
-        animate={isHidden ? "hidden" : "visible"}
-        transition={{
-          duration: 0.45,
-          ease: [0.22, 1, 0.36, 1],
-          opacity: { duration: 0.3 },
-        }}
-        className="fixed inset-x-0 top-0 z-50"
-      >
+      <header className="fixed inset-x-0 top-0 z-50">
         <nav
           className={`relative w-full border-b border-gray-100 bg-white transition-shadow duration-300 ${
             isScrolled ? "shadow-[0_8px_30px_rgba(0,0,0,0.06)]" : "shadow-none"
@@ -170,7 +141,7 @@ export default function Navbar() {
             </div>
           </motion.div>
         </nav>
-      </motion.header>
+      </header>
 
       {/* Spacer so page content isn't covered by the fixed nav */}
       <div className="h-[73px] sm:h-[77px]" aria-hidden="true" />

@@ -1,3 +1,7 @@
+"use client";
+
+import { Reveal } from "@/components/motion/Reveal";
+
 const words = Array.from({ length: 12 }, () => "novure");
 
 export default function Footer() {
@@ -7,7 +11,10 @@ export default function Footer() {
   return (
     <footer className="bg-white pt-14 sm:pt-16">
       <div className="mx-auto max-w-[1400px] px-5 pb-10 sm:px-8 lg:px-10">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
+        <Reveal
+          variant="up"
+          className="grid grid-cols-1 gap-10 sm:grid-cols-3"
+        >
           <div>
             <h3 className="font-geist text-base font-medium text-gray-900">
               Contact
@@ -39,16 +46,19 @@ export default function Footer() {
               <li className="text-gray-400">About us</li>
             </ul>
           </div>
-        </div>
+        </Reveal>
       </div>
 
-      {/* Giant cropped wordmark — continuous marquee */}
-      <div className="h-24 overflow-hidden sm:h-32 lg:h-40" aria-hidden="true">
+      {/* Giant cropped wordmark — continuous marquee (always on; no scroll reveal so mobile bottom-of-page stays visible) */}
+      <div
+        className="h-28 overflow-hidden sm:h-32 lg:h-40"
+        aria-hidden="true"
+      >
         <div className="animate-footer-marquee flex w-max">
           {track.map((word, i) => (
             <span
               key={`${word}-${i}`}
-              className="-mb-6 shrink-0 pr-6 font-geist text-[6.5rem] font-bold leading-none tracking-tight text-gray-900 sm:pr-8 sm:text-[9rem] lg:pr-10 lg:text-[11rem]"
+              className="-mb-4 shrink-0 pr-5 font-geist text-[5.5rem] font-bold leading-none tracking-tight text-gray-900 sm:-mb-6 sm:pr-8 sm:text-[9rem] lg:pr-10 lg:text-[11rem]"
             >
               {word}
             </span>

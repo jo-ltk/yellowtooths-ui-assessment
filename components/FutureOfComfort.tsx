@@ -3,10 +3,10 @@
 import { ArrowUpRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { Reveal, RevealText } from "@/components/motion/Reveal";
 
 // Mixkit free stock — fashion runway catwalk
-const BANNER_VIDEO =
-  "https://assets.mixkit.co/videos/52270/52270-720.mp4"; // model on runway
+const BANNER_VIDEO = "https://assets.mixkit.co/videos/52270/52270-720.mp4"; // model on runway
 
 export default function FutureOfComfort() {
   return (
@@ -24,22 +24,29 @@ export default function FutureOfComfort() {
 
         <div className="relative z-10 flex h-full flex-col justify-end p-6 sm:p-10 lg:p-14">
           <h2 className="max-w-2xl font-geist text-5xl font-semibold leading-[1.02] tracking-tight text-white sm:text-6xl lg:text-7xl">
-            The Future
+            <RevealText text="The Future" mode="chars" stagger={0.03} />
             <br />
-            of Comfort
+            <RevealText
+              text="of Comfort"
+              mode="chars"
+              stagger={0.03}
+              delay={0.1}
+            />
             <br />
-            Awaits
+            <RevealText text="Awaits" mode="chars" stagger={0.04} delay={0.2} />
           </h2>
 
-          <Button
-            type="button"
-            className="mt-8 h-auto w-fit gap-3 rounded-full bg-white py-1.5 pl-5 pr-1.5 text-sm text-black shadow-none transition-transform duration-300 hover:scale-105 hover:bg-white hover:text-black"
-          >
-            Buy Now
-            <span className="flex size-8 items-center justify-center rounded-full bg-black text-white">
-              <ArrowUpRight className="size-4" strokeWidth={2} />
-            </span>
-          </Button>
+          <Reveal delay={0.35}>
+            <Button
+              type="button"
+              className="mt-8 h-auto w-fit gap-3 rounded-full bg-white py-1.5 pr-1.5 pl-5 text-sm text-black shadow-none transition-transform duration-300 hover:scale-105 hover:bg-white hover:text-black"
+            >
+              Buy Now
+              <span className="flex size-8 items-center justify-center rounded-full bg-black text-white">
+                <ArrowUpRight className="size-4" strokeWidth={2} />
+              </span>
+            </Button>
+          </Reveal>
         </div>
       </div>
     </section>

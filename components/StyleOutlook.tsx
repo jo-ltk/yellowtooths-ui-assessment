@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
+import { Reveal, RevealText } from "@/components/motion/Reveal";
 import { cn } from "@/lib/utils";
 
 const tabs = [
@@ -98,16 +99,20 @@ export default function StyleOutlook() {
       <div className="mx-auto max-w-[1400px] rounded-[2.5rem] bg-gradient-to-b from-neutral-900 to-black px-5 py-8 ring-1 ring-white/[0.06] sm:px-8 sm:py-10 lg:px-10 lg:py-12">
         {/* Header */}
         <div className="mb-10 grid grid-cols-1 gap-4 lg:mb-12 lg:grid-cols-[80px_1fr_300px] lg:items-start lg:gap-10">
-          <span className="font-geist text-xs tracking-[0.15em] text-white/35">
-            /03
-          </span>
+          <Reveal variant="fade">
+            <span className="font-geist text-xs tracking-[0.15em] text-white/35">
+              /03
+            </span>
+          </Reveal>
           <h2 className="font-geist text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Style Outlook
+            <RevealText text="Style Outlook" mode="words" stagger={0.1} />
           </h2>
-          <p className="max-w-xs font-geist text-sm leading-relaxed text-white/50 lg:justify-self-end lg:text-right">
-            Make simplicity your boldest statement — experience crafted
-            essentials with quiet, deliberate purpose.
-          </p>
+          <Reveal variant="up" delay={0.12}>
+            <p className="max-w-xs font-geist text-sm leading-relaxed text-white/50 lg:justify-self-end lg:text-right">
+              Make simplicity your boldest statement — experience crafted
+              essentials with quiet, deliberate purpose.
+            </p>
+          </Reveal>
         </div>
 
         {/* Row A: big video left, two stacked tiles right */}

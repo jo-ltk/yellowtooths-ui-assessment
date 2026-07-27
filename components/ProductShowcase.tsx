@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+
+import { Reveal } from "@/components/motion/Reveal";
 
 const images = {
   goldDust:
@@ -12,13 +16,13 @@ export default function ProductShowcase() {
     <section className="mx-auto max-w-[1400px] px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8 lg:pb-28">
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-8">
         {/* Card 1 */}
-        <div className="flex flex-col items-center">
+        <Reveal variant="up" className="flex flex-col items-center">
           <div className="relative h-64 w-full overflow-hidden rounded-2xl bg-stone-100 sm:h-80 lg:h-96">
             <Image
               src={images.goldDust}
               alt="Gold Dust & Cracked Perfumes"
               fill
-              className="object-cover"
+              className="object-cover transition-transform duration-700 ease-out hover:scale-[1.04]"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
@@ -35,16 +39,20 @@ export default function ProductShowcase() {
           >
             Shop Selection
           </a>
-        </div>
+        </Reveal>
 
         {/* Card 2 */}
-        <div className="flex flex-col items-center">
+        <Reveal
+          variant="up"
+          delay={0.12}
+          className="flex flex-col items-center"
+        >
           <div className="relative h-64 w-full overflow-hidden rounded-2xl bg-stone-100 sm:h-80 lg:h-96">
             <Image
               src={images.womens}
               alt="Women's Fragrances Perfumes"
               fill
-              className="object-cover"
+              className="object-cover transition-transform duration-700 ease-out hover:scale-[1.04]"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
@@ -62,7 +70,7 @@ export default function ProductShowcase() {
           >
             Shop Selection
           </a>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

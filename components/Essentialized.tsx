@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+
+import { Reveal } from "@/components/motion/Reveal";
 import CircularText from "./CircularText";
 
 const products = [
@@ -32,40 +34,51 @@ export default function Essentialized() {
       {/* Full-bleed wordmark — stretched edge to edge, no side gaps */}
       <div className="mx-auto max-w-[1400px]">
         <h2 className="sr-only">Essentialized</h2>
-        <svg
-          viewBox="0 0 1000 118"
-          className="block h-auto w-full text-gray-900"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <text
-            x="0"
-            y="100"
-            textLength="1000"
-            lengthAdjust="spacingAndGlyphs"
-            fill="currentColor"
-            style={{
-              fontFamily:
-                "var(--font-cormorant), ui-serif, Georgia, serif",
-              fontWeight: 800,
-              fontSize: 128,
-              letterSpacing: "-0.04em",
-            }}
+        <Reveal variant="up" duration={1.1}>
+          <svg
+            viewBox="0 0 1000 118"
+            className="block h-auto w-full text-gray-900"
+            aria-hidden="true"
+            focusable="false"
           >
-            Essentialized
-          </text>
-        </svg>
+            <text
+              x="0"
+              y="100"
+              textLength="1000"
+              lengthAdjust="spacingAndGlyphs"
+              fill="currentColor"
+              style={{
+                fontFamily:
+                  "var(--font-cormorant), ui-serif, Georgia, serif",
+                fontWeight: 800,
+                fontSize: 128,
+                letterSpacing: "-0.04em",
+              }}
+            >
+              Essentialized
+            </text>
+          </svg>
+        </Reveal>
 
         <div className="mt-5 flex flex-col gap-3 border-t border-gray-200 pt-4 sm:mt-6 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
-          <p className="max-w-[220px] font-geist text-sm font-light leading-snug text-gray-600">
-            Feel confident in every layer, we engineered comfort you can trust
-          </p>
-          <p className="max-w-[220px] font-geist text-sm font-light leading-snug text-gray-600 sm:text-right">
-            Smart comfort for daily living, with style that simplifies your life
-          </p>
+          <Reveal variant="left" delay={0.08}>
+            <p className="max-w-[220px] font-geist text-sm font-light leading-snug text-gray-600">
+              Feel confident in every layer, we engineered comfort you can trust
+            </p>
+          </Reveal>
+          <Reveal variant="right" delay={0.14}>
+            <p className="max-w-[220px] font-geist text-sm font-light leading-snug text-gray-600 sm:text-right">
+              Smart comfort for daily living, with style that simplifies your
+              life
+            </p>
+          </Reveal>
         </div>
 
-        <div className="relative mt-6 h-[380px] w-full overflow-hidden rounded-2xl sm:mt-8 sm:h-[460px] lg:h-[560px]">
+        <Reveal
+          variant="scale"
+          delay={0.1}
+          className="relative mt-6 h-[380px] w-full overflow-hidden rounded-2xl sm:mt-8 sm:h-[460px] lg:h-[560px]"
+        >
           {(Object.keys(videos) as Array<keyof typeof videos>).map((key) => (
             <video
               key={key}
@@ -114,7 +127,7 @@ export default function Essentialized() {
               );
             })}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

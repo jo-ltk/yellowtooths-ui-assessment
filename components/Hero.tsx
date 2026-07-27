@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+import { RevealText } from "@/components/motion/Reveal";
 import { cn } from "@/lib/utils";
 
 const slides = [
@@ -82,11 +83,21 @@ export default function Hero() {
         {/* Text overlay — always top-left */}
         <div className="absolute top-0 left-0 z-10 flex flex-col items-start px-5 pt-6 sm:px-8 sm:pt-8 md:px-10 md:pt-10 lg:px-14 lg:pt-14">
           <h1 className="font-display text-3xl font-light leading-[1.05] tracking-tight text-gray-900 sm:text-5xl md:text-6xl lg:text-7xl">
-            FRAGRANCE
+            <RevealText text="FRAGRANCE" mode="chars" stagger={0.04} />
             <br />
-            BECOMES
+            <RevealText
+              text="BECOMES"
+              mode="chars"
+              stagger={0.04}
+              delay={0.15}
+            />
             <br />
-            MEMORY
+            <RevealText
+              text="MEMORY"
+              mode="chars"
+              stagger={0.045}
+              delay={0.3}
+            />
           </h1>
         </div>
 

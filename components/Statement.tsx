@@ -16,7 +16,7 @@ export default function Statement() {
   useGSAP(
     (_context, contextSafe) => {
       const chips = gsap.utils.toArray<HTMLElement>("[data-statement-chip]");
-      if (!chips.length) return;
+      if (!chips.length || !contextSafe) return;
 
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         return;

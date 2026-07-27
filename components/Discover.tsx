@@ -179,10 +179,10 @@ export default function Discover() {
       <div className="mx-auto max-w-[1400px] rounded-[2rem] bg-neutral-50 px-5 py-8 sm:px-10 sm:py-10">
         {/* Top row: Filter by / Search */}
         <div className="flex items-center justify-between">
-          <h2 className="font-geist text-2xl font-medium tracking-tight text-gray-900 sm:text-3xl">
+          <h2 className="font-display text-2xl font-medium tracking-tight text-gray-900 sm:text-3xl">
             Filter by
           </h2>
-          <h2 className="font-geist text-2xl font-medium tracking-tight text-gray-900 sm:text-3xl">
+          <h2 className="font-display text-2xl font-medium tracking-tight text-gray-900 sm:text-3xl">
             Search
           </h2>
         </div>
@@ -322,7 +322,7 @@ export default function Discover() {
                 {/* Meta */}
                 <div className="flex flex-1 flex-col px-5 pt-4 pb-5">
                   <div className="flex items-start justify-between gap-3">
-                    <h4 className="font-geist text-[15px] leading-snug font-semibold tracking-tight text-gray-900">
+                    <h4 className="font-display text-[15px] leading-snug font-semibold tracking-tight text-gray-900">
                       {product.name}
                     </h4>
                     <StarRating className="mt-1" />

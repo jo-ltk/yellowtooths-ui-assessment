@@ -46,7 +46,7 @@ export default function Essentialized() {
             fill="currentColor"
             style={{
               fontFamily:
-                "var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif",
+                "var(--font-cormorant), ui-serif, Georgia, serif",
               fontWeight: 800,
               fontSize: 128,
               letterSpacing: "-0.04em",

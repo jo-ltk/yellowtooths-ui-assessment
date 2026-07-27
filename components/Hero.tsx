@@ -12,12 +12,12 @@ const slides = [
     objectPosition: "object-right",
   },
   {
-    src: "/hero-2.jpg",
+    src: "/hero-slide-2.jpg",
     alt: "Fashion editorial portrait",
     objectPosition: "object-center",
   },
   {
-    src: "/hero-3.jpg",
+    src: "/hero-slide-3.jpg",
     alt: "Fashion editorial portrait",
     objectPosition: "object-center",
   },
@@ -36,8 +36,31 @@ export default function Hero() {
     return () => window.clearInterval(id);
   }, [active]);
 
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement | null)?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      if ((e.target as HTMLElement | null)?.isContentEditable) return;
+
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        setActive((prev) => (prev + 1) % slides.length);
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        setActive((prev) => (prev - 1 + slides.length) % slides.length);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
   return (
-    <section className="p-3 sm:p-4">
+    <section
+      className="p-3 sm:p-4"
+      aria-roledescription="carousel"
+      aria-label="Hero image carousel"
+    >
       <div className="relative h-[calc(100svh-5.5rem-1.5rem)] min-h-[420px] overflow-hidden rounded-2xl bg-sky-200 sm:h-[calc(100svh-5.5rem-2rem)]">
         {/* Full-bleed slides */}
         {slides.map((slide, i) => (

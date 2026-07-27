@@ -9,6 +9,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-display: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-geist: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {

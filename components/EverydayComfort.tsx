@@ -72,13 +72,16 @@ export default function EverydayComfort() {
           onMouseLeave={() => setPaused(false)}
         >
           <div
+            key={direction}
             className={cn(
               "flex w-max gap-10 sm:gap-14",
-              direction === "left"
-                ? "animate-mannequin-left"
-                : "animate-mannequin-right",
               paused && "[animation-play-state:paused]",
             )}
+            style={{
+              animation: `${
+                direction === "left" ? "mannequin-left" : "mannequin-right"
+              } 14s linear infinite`,
+            }}
           >
             {track.map((garment, i) => (
               <div

@@ -42,7 +42,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Giant cropped wordmark — continuous marquee, faster than the garment runway */}
+      {/* Giant cropped wordmark — continuous marquee */}
       <div className="h-24 overflow-hidden sm:h-32 lg:h-40" aria-hidden="true">
         <div className="animate-footer-marquee flex w-max">
           {track.map((word, i) => (

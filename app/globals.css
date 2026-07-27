@@ -38,8 +38,8 @@
   --font-geist: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --animate-mannequin-left: mannequin-left 40s linear infinite;
-  --animate-mannequin-right: mannequin-right 40s linear infinite;
+  --animate-mannequin-left: mannequin-left 14s linear infinite;
+  --animate-mannequin-right: mannequin-right 14s linear infinite;
   --animate-footer-marquee: footer-marquee 28s linear infinite;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);

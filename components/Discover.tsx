@@ -36,62 +36,118 @@ const filters: { label: string; options: string[] }[] = [
   },
 ];
 
+const SIZE_ORDER = ["XS", "S", "M", "L", "XL", "XXL", "XXXL"] as const;
+
 const products = [
   {
     id: "amber-blaze-classic-tee",
     name: "Amber Blaze Classic Tee",
+    category: "Tees",
+    color: "Amber Blaze",
     sizeRange: "XS - XXXL",
     price: "$250",
+    priceValue: 250,
     image:
       "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "mystic-mauve-everyday-crew",
     name: "Mystic Mauve Everyday Crew",
+    category: "Tees",
+    color: "Mystic Mauve",
     sizeRange: "S - XXL",
     price: "$350",
+    priceValue: 350,
     image:
       "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "amber-blaze-softwear-coat",
     name: "Amber Blaze Softwear Coat",
+    category: "Coats",
+    color: "Amber Blaze",
     sizeRange: "S - XL",
     price: "$500",
+    priceValue: 500,
     image:
       "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "golden-hour-relaxed-tee",
     name: "Golden Hour Relaxed Tee",
+    category: "Tees",
+    color: "Amber Blaze",
     sizeRange: "XS - XXL",
     price: "$220",
+    priceValue: 220,
     image:
       "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "sunset-pullover-hoodie",
     name: "Sunset Pullover Hoodie",
+    category: "Hoodies",
+    color: "Amber Blaze",
     sizeRange: "S - XXL",
     price: "$310",
+    priceValue: 310,
     image:
       "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "emerald-everyday-crew",
     name: "Emerald Everyday Crew",
+    category: "Tees",
+    color: "Emerald",
     sizeRange: "S - XL",
     price: "$280",
+    priceValue: 280,
     image:
       "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=800&q=80",
   },
 ];
 
-function StarRating() {
+type Product = (typeof products)[number];
+
+function matchesSize(sizeRange: string, size: string) {
+  const [from, to] = sizeRange.split(" - ").map((part) => part.trim());
+  const fromIndex = SIZE_ORDER.indexOf(from as (typeof SIZE_ORDER)[number]);
+  const toIndex = SIZE_ORDER.indexOf(to as (typeof SIZE_ORDER)[number]);
+  const sizeIndex = SIZE_ORDER.indexOf(size as (typeof SIZE_ORDER)[number]);
+
+  if (fromIndex === -1 || toIndex === -1 || sizeIndex === -1) return false;
+  return sizeIndex >= fromIndex && sizeIndex <= toIndex;
+}
+
+function matchesPrice(priceValue: number, priceFilter: string) {
+  switch (priceFilter) {
+    case "Under $250":
+      return priceValue < 250;
+    case "$250 - $350":
+      return priceValue >= 250 && priceValue <= 350;
+    case "$350 - $500":
+      return priceValue >= 350 && priceValue <= 500;
+    case "$500+":
+      return priceValue >= 500;
+    default:
+      return true;
+  }
+}
+
+function StarRating({ className }: { className?: string }) {
   return (
-    <div className="flex shrink-0 items-center gap-0.5 text-gray-900">
+    <div
+      className={cn(
+        "flex shrink-0 items-center gap-0.5 text-gray-900",
+        className,
+      )}
+    >
       {Array.from({ length: 5 }).map((_, i) => (
-        <Star key={i} className="size-3 fill-current" strokeWidth={0} />
+        <Star
+          key={i}
+          className="size-3 fill-current sm:size-3.5"
+          strokeWidth={0}
+        />
       ))}
     </div>
   );
@@ -101,9 +157,22 @@ export default function Discover() {
   const [selected, setSelected] = useState<Record<string, string>>({});
   const [query, setQuery] = useState("");
 
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(query.trim().toLowerCase()),
-  );
+  const filteredProducts = products.filter((product) => {
+    const category = selected.Category;
+    const size = selected.Size;
+    const color = selected.Color;
+    const price = selected.Price;
+    const search = query.trim().toLowerCase();
+
+    if (search && !product.name.toLowerCase().includes(search)) return false;
+    if (category && category !== "All" && product.category !== category)
+      return false;
+    if (size && !matchesSize(product.sizeRange, size)) return false;
+    if (color && product.color !== color) return false;
+    if (price && !matchesPrice(product.priceValue, price)) return false;
+
+    return true;
+  });
 
   return (
     <section className="bg-neutral-100 px-3 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
@@ -122,7 +191,7 @@ export default function Discover() {
         <div className="mt-6 flex flex-col gap-4 sm:mt-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap gap-3">
             {filters.map((filter) => {
-              const value = selected[filter.label];
+              const value = selected[filter.label] ?? "";
 
               return (
                 <DropdownMenu key={filter.label}>
@@ -132,7 +201,7 @@ export default function Discover() {
                       value && "text-gray-900",
                     )}
                   >
-                    <span>{value ?? filter.label}</span>
+                    <span>{value || filter.label}</span>
                     <ChevronDown className="size-3.5 opacity-70" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent
@@ -163,6 +232,18 @@ export default function Discover() {
                 </DropdownMenu>
               );
             })}
+            <Button
+              type="button"
+              variant="ghost"
+              disabled={!Object.keys(selected).length && !query}
+              onClick={() => {
+                setSelected({});
+                setQuery("");
+              }}
+              className="h-auto rounded-full px-5 py-3 text-sm text-gray-500 hover:bg-neutral-200/70 hover:text-gray-900 disabled:opacity-40"
+            >
+              Reset
+            </Button>
           </div>
 
           <div className="relative w-full sm:w-64">
@@ -203,54 +284,73 @@ export default function Discover() {
           {/* Product grid */}
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product) => (
-              <article key={product.id} className="flex flex-col">
-                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-stone-100">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 280px"
-                    className="object-cover"
-                  />
-                  <WishlistButton
-                    product={{
-                      id: product.id,
-                      name: product.name,
-                      price: product.price,
-                      image: product.image,
-                    }}
-                  />
-                </div>
+              <article
+                key={product.id}
+                className="group relative z-0 transition-[z-index] duration-0 hover:z-20"
+              >
+                {/* One continuous card — expands down over the meta on hover */}
+                <div className="overflow-hidden rounded-2xl transition-shadow duration-300 ease-out group-hover:bg-white group-hover:shadow-xl group-hover:ring-2 group-hover:ring-[#f08a2e]">
+                  <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-stone-100 group-hover:rounded-none group-hover:rounded-t-2xl">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 280px"
+                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    />
 
-                <div className="mt-4 flex items-start justify-between gap-2">
-                  <h4 className="font-geist text-sm font-medium leading-snug text-gray-900 sm:text-base">
-                    {product.name}
-                  </h4>
-                  <StarRating />
-                </div>
+                    <WishlistButton
+                      product={{
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        image: product.image,
+                      }}
+                    />
 
-                <div className="mt-2 flex items-center justify-between">
-                  <span className="font-geist text-xl font-semibold text-gray-900">
-                    {product.price}
-                  </span>
-                  <span className="font-geist text-xs text-gray-400">
-                    {product.sizeRange}
-                  </span>
-                </div>
+                    <button
+                      type="button"
+                      aria-label={`View ${product.name}`}
+                      className="absolute right-4 bottom-4 z-10 flex size-10 translate-y-2 items-center justify-center rounded-full bg-white text-gray-950 opacity-0 shadow-md transition-all duration-300 hover:scale-105 group-hover:translate-y-0 group-hover:opacity-100 sm:right-5"
+                    >
+                      <ArrowUpRight className="size-4" strokeWidth={2} />
+                    </button>
+                  </div>
 
-                <AddToCartButton
-                  product={{
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                    image: product.image,
-                  }}
-                />
+                  {/* Meta sits under the image; on hover it becomes the card’s bottom panel */}
+                  <div className="bg-transparent px-0 pt-4 transition-all duration-300 ease-out group-hover:bg-white group-hover:px-5 group-hover:pt-4 group-hover:pb-4">
+                    <div className="flex items-start justify-between gap-2">
+                      <h4 className="font-geist text-sm font-medium leading-snug text-gray-900 transition-all group-hover:max-w-[12rem] group-hover:text-base group-hover:font-semibold sm:text-base">
+                        {product.name}
+                      </h4>
+                      <StarRating className="mt-0.5" />
+                    </div>
+
+                    <div className="mt-2 flex items-center justify-between transition-all group-hover:mt-3 group-hover:items-end">
+                      <span className="font-geist text-xl font-semibold text-gray-900 group-hover:order-2">
+                        {product.price}
+                      </span>
+                      <span className="font-geist text-xs text-gray-400 group-hover:order-1 group-hover:text-sm group-hover:text-gray-500">
+                        {product.sizeRange}
+                      </span>
+                    </div>
+
+                    <AddToCartButton
+                      product={{
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        image: product.image,
+                      }}
+                      className="mt-3 group-hover:mt-3"
+                    />
+                  </div>
+                </div>
               </article>
             ))}
             {filteredProducts.length === 0 && (
               <p className="col-span-full py-16 text-center font-geist text-sm text-gray-400">
-                No products match your search.
+                No products match your filters.
               </p>
             )}
           </div>

@@ -1,19 +1,25 @@
+"use client";
+
+import Image from "next/image";
+import { useState } from "react";
+
 const products = [
-  {
-    name: "Tees",
-    dots: ["bg-orange-500", "bg-[#C5A46A]", "bg-lime-600"],
-  },
-  {
-    name: "Hoodie",
-    dots: ["bg-orange-500", "bg-[#C5A46A]", "bg-lime-600"],
-  },
-  {
-    name: "Pants",
-    dots: ["bg-orange-500", "bg-[#C5A46A]", "bg-lime-600"],
-  },
+  { key: "tees", name: "Tees" },
+  { key: "hoodie", name: "Hoodie" },
+  { key: "pants", name: "Pants" },
 ] as const;
 
+const images = {
+  tees: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1600&auto=format&fit=crop",
+  hoodie:
+    "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1600&auto=format&fit=crop",
+  pants:
+    "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=1600&auto=format&fit=crop",
+};
+
 export default function Essentialized() {
+  const [active, setActive] = useState<"tees" | "hoodie" | "pants">("tees");
+
   return (
     <section className="pb-16 sm:pb-20 lg:pb-28">
       {/* Full-bleed wordmark — stretched edge to edge, no side gaps */}
@@ -53,8 +59,18 @@ export default function Essentialized() {
         </div>
 
         <div className="relative mt-6 h-[380px] w-full overflow-hidden rounded-2xl sm:mt-8 sm:h-[460px] lg:h-[560px]">
-          {/* Fabric / campaign photograph placeholder */}
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-200 via-orange-400 to-orange-300" />
+          {(Object.keys(images) as Array<keyof typeof images>).map((key) => (
+            <Image
+              key={key}
+              src={images[key]}
+              alt={`${key} campaign photo`}
+              fill
+              priority={key === "tees"}
+              className={`object-cover transition-opacity duration-700 ease-out ${
+                active === key ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
 
           <a
             href="/collections/essentials?source=Essentialized"
@@ -63,28 +79,42 @@ export default function Essentialized() {
             Buy Now
           </a>
 
-          <div className="absolute bottom-4 right-4 z-10 hidden gap-3 sm:bottom-6 sm:right-6 sm:flex lg:bottom-8 lg:right-8">
-            {products.map((item) => (
-              <div
-                key={item.name}
-                className="relative flex h-32 w-24 flex-col overflow-hidden rounded-xl border border-gray-100 bg-white p-3 lg:h-36 lg:w-28"
-              >
-                <span className="font-geist text-[11px] font-light text-gray-900">
-                  {item.name}
-                </span>
-                <div className="mt-2 flex flex-col gap-1.5">
-                  {item.dots.map((color, i) => (
-                    <button
-                      key={`${item.name}-${i}`}
-                      type="button"
-                      aria-label={`${item.name} color ${i + 1}`}
-                      className={`h-1.5 w-1.5 rounded-full ${color}`}
+          <div className="absolute bottom-4 right-4 z-10 hidden gap-2 sm:bottom-6 sm:right-6 sm:flex lg:bottom-8 lg:right-8">
+            {products.map((item) => {
+              const isActive = active === item.key;
+              return (
+                <button
+                  key={item.key}
+                  type="button"
+                  onClick={() => setActive(item.key)}
+                  aria-pressed={isActive}
+                  className={`group flex w-16 flex-col items-center gap-1.5 transition-all duration-300 ease-out lg:w-[72px] ${
+                    isActive ? "opacity-100" : "opacity-70 hover:opacity-100"
+                  }`}
+                >
+                  <div
+                    className={`relative aspect-square w-full overflow-hidden rounded-2xl bg-stone-100 transition-transform duration-300 ease-out ${
+                      isActive ? "scale-105 shadow-sm" : "group-hover:scale-105"
+                    }`}
+                  >
+                    <Image
+                      src={images[item.key]}
+                      alt={`${item.name} preview`}
+                      fill
+                      sizes="72px"
+                      className="object-cover"
                     />
-                  ))}
-                </div>
-                <div className="absolute -bottom-3 -right-3 h-16 w-16 rounded-full bg-gradient-to-br from-[#E5D9C3] to-stone-300" />
-              </div>
-            ))}
+                  </div>
+                  <span
+                    className={`font-serif text-[10px] font-light tracking-wide lg:text-[11px] ${
+                      isActive ? "text-gray-900" : "text-gray-500"
+                    }`}
+                  >
+                    {item.name}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>

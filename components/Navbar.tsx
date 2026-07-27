@@ -1,4 +1,16 @@
+"use client";
+
+import Link from "next/link";
+import { Heart } from "lucide-react";
+
+import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
+
 export default function Navbar() {
+  const { items } = useWishlist();
+  const { itemCount } = useCart();
+  const count = items.length;
+
   return (
     <nav className="relative w-full bg-white border-b border-gray-100">
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-5 sm:px-8 lg:px-10">
@@ -38,14 +50,38 @@ export default function Navbar() {
 
         {/* Center: logo */}
         <div className="absolute left-1/2 -translate-x-1/2">
-          <span className="font-serif text-2xl tracking-[0.15em] text-gray-900 sm:text-3xl">
+          <Link
+            href="/"
+            className="font-serif text-2xl tracking-[0.15em] text-gray-900 sm:text-3xl"
+          >
             PARFS
-          </span>
+          </Link>
         </div>
 
-        {/* Right: bag + profile */}
+        {/* Right: wishlist + bag + profile */}
         <div className="flex items-center gap-6">
-          <button aria-label="Bag" className="text-gray-900">
+          <Link
+            href="/wishlist"
+            aria-label={
+              count > 0 ? `Wishlist, ${count} items` : "Wishlist"
+            }
+            className="relative text-gray-900"
+          >
+            <Heart className="h-5 w-5" strokeWidth={1.5} />
+            {count > 0 && (
+              <span className="absolute -top-1.5 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-gray-900 px-1 text-[10px] font-light leading-none text-white">
+                {count > 99 ? "99+" : count}
+              </span>
+            )}
+          </Link>
+
+          <Link
+            href="/cart"
+            aria-label={
+              itemCount > 0 ? `Bag, ${itemCount} items` : "Bag"
+            }
+            className="relative text-gray-900"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -61,7 +97,12 @@ export default function Navbar() {
               />
               <path strokeLinecap="round" d="M9 8V6a3 3 0 0 1 6 0v2" />
             </svg>
-          </button>
+            {itemCount > 0 && (
+              <span className="absolute -top-1.5 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-gray-900 px-1 text-[10px] font-light leading-none text-white">
+                {itemCount > 99 ? "99+" : itemCount}
+              </span>
+            )}
+          </Link>
           <button aria-label="Account" className="text-gray-900">
             <svg
               xmlns="http://www.w3.org/2000/svg"

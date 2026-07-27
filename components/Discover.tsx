@@ -13,6 +13,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import WishlistButton from "@/components/WishlistButton";
+import { useCart } from "@/context/CartContext";
 import { cn } from "@/lib/utils";
 
 const filters: { label: string; options: string[] }[] = [
@@ -36,6 +38,7 @@ const filters: { label: string; options: string[] }[] = [
 
 const products = [
   {
+    id: "amber-blaze-classic-tee",
     name: "Amber Blaze Classic Tee",
     sizeRange: "XS - XXXL",
     price: "$250",
@@ -43,6 +46,7 @@ const products = [
       "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80",
   },
   {
+    id: "mystic-mauve-everyday-crew",
     name: "Mystic Mauve Everyday Crew",
     sizeRange: "S - XXL",
     price: "$350",
@@ -50,6 +54,7 @@ const products = [
       "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=800&q=80",
   },
   {
+    id: "amber-blaze-softwear-coat",
     name: "Amber Blaze Softwear Coat",
     sizeRange: "S - XL",
     price: "$500",
@@ -57,6 +62,7 @@ const products = [
       "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=800&q=80",
   },
   {
+    id: "golden-hour-relaxed-tee",
     name: "Golden Hour Relaxed Tee",
     sizeRange: "XS - XXL",
     price: "$220",
@@ -64,6 +70,7 @@ const products = [
       "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80",
   },
   {
+    id: "sunset-pullover-hoodie",
     name: "Sunset Pullover Hoodie",
     sizeRange: "S - XXL",
     price: "$310",
@@ -71,6 +78,7 @@ const products = [
       "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80",
   },
   {
+    id: "emerald-everyday-crew",
     name: "Emerald Everyday Crew",
     sizeRange: "S - XL",
     price: "$280",
@@ -92,6 +100,7 @@ function StarRating() {
 export default function Discover() {
   const [selected, setSelected] = useState<Record<string, string>>({});
   const [query, setQuery] = useState("");
+  const { addToCart } = useCart();
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(query.trim().toLowerCase()),
@@ -195,7 +204,7 @@ export default function Discover() {
           {/* Product grid */}
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product) => (
-              <article key={product.name} className="flex flex-col">
+              <article key={product.id} className="flex flex-col">
                 <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-stone-100">
                   <Image
                     src={product.image}
@@ -203,6 +212,14 @@ export default function Discover() {
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 280px"
                     className="object-cover"
+                  />
+                  <WishlistButton
+                    product={{
+                      id: product.id,
+                      name: product.name,
+                      price: product.price,
+                      image: product.image,
+                    }}
                   />
                 </div>
 
@@ -214,13 +231,28 @@ export default function Discover() {
                 </div>
 
                 <div className="mt-2 flex items-center justify-between">
-                  <span className="font-geist text-xs text-gray-400">
-                    {product.sizeRange}
-                  </span>
                   <span className="font-geist text-xl font-semibold text-gray-900">
                     {product.price}
                   </span>
+                  <span className="font-geist text-xs text-gray-400">
+                    {product.sizeRange}
+                  </span>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    addToCart({
+                      id: product.id,
+                      name: product.name,
+                      price: product.price,
+                      image: product.image,
+                    })
+                  }
+                  className="mt-4 cursor-pointer self-start border-b border-gray-900 pb-1 font-geist text-[10px] font-light uppercase tracking-[0.2em] text-gray-900 sm:text-xs"
+                >
+                  Add to Cart
+                </button>
               </article>
             ))}
 

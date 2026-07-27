@@ -8,6 +8,8 @@ import {
   type ReactNode,
 } from "react";
 
+import { useToast } from "@/components/Toast";
+
 export type CartProduct = {
   id: string;
   name: string;
@@ -133,6 +135,7 @@ function readStoredItems(): CartItem[] {
 }
 
 export function CartProvider({ children }: { children: ReactNode }) {
+  const { toast } = useToast();
   const [state, dispatch] = useReducer(cartReducer, {
     items: [],
     hydrated: false,
@@ -155,7 +158,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const value: CartContextValue = {
     items: state.items,
-    addToCart: (product) => dispatch({ type: "ADD", product }),
+    addToCart: (product) => {
+      dispatch({ type: "ADD", product });
+      toast(`Added ${product.name} to cart`);
+    },
     removeFromCart: (id) => dispatch({ type: "REMOVE", id }),
     updateQuantity: (id, quantity) =>
       dispatch({ type: "UPDATE_QUANTITY", id, quantity }),

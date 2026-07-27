@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import WishlistButton from "@/components/WishlistButton";
-import { useCart } from "@/context/CartContext";
+import AddToCartButton from "@/components/AddToCartButton";
 import { cn } from "@/lib/utils";
 
 const filters: { label: string; options: string[] }[] = [
@@ -100,7 +100,6 @@ function StarRating() {
 export default function Discover() {
   const [selected, setSelected] = useState<Record<string, string>>({});
   const [query, setQuery] = useState("");
-  const { addToCart } = useCart();
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(query.trim().toLowerCase()),
@@ -239,23 +238,16 @@ export default function Discover() {
                   </span>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() =>
-                    addToCart({
-                      id: product.id,
-                      name: product.name,
-                      price: product.price,
-                      image: product.image,
-                    })
-                  }
-                  className="mt-4 cursor-pointer self-start border-b border-gray-900 pb-1 font-geist text-[10px] font-light uppercase tracking-[0.2em] text-gray-900 sm:text-xs"
-                >
-                  Add to Cart
-                </button>
+                <AddToCartButton
+                  product={{
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                  }}
+                />
               </article>
             ))}
-
             {filteredProducts.length === 0 && (
               <p className="col-span-full py-16 text-center font-geist text-sm text-gray-400">
                 No products match your search.

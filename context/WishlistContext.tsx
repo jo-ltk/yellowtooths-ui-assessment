@@ -8,6 +8,8 @@ import {
   type ReactNode,
 } from "react";
 
+import { useToast } from "@/components/Toast";
+
 export type WishlistItem = {
   id: string;
   name: string;
@@ -70,6 +72,7 @@ function readStoredItems(): WishlistItem[] {
 }
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
+  const { toast } = useToast();
   const [state, dispatch] = useReducer(wishlistReducer, {
     items: [],
     hydrated: false,
@@ -86,8 +89,16 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
 
   const value: WishlistContextValue = {
     items: state.items,
-    addToWishlist: (item) => dispatch({ type: "ADD", item }),
-    removeFromWishlist: (id) => dispatch({ type: "REMOVE", id }),
+    addToWishlist: (item) => {
+      if (state.items.some((existing) => existing.id === item.id)) return;
+      dispatch({ type: "ADD", item });
+      toast(`Added ${item.name} to wishlist`);
+    },
+    removeFromWishlist: (id) => {
+      const item = state.items.find((existing) => existing.id === id);
+      dispatch({ type: "REMOVE", id });
+      if (item) toast(`Removed ${item.name} from wishlist`);
+    },
     isWishlisted: (id) => state.items.some((item) => item.id === id),
   };
 

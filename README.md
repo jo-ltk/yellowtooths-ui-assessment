@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PARFS
 
-## Getting Started
+An editorial fragrance storefront built with Next.js. Soft product storytelling, scroll-driven motion, and a clean shopping flow for browsing, wishlist, and cart.
 
-First, run the development server:
+## Stack
+
+- [Next.js](https://nextjs.org) (App Router)
+- React 19 & TypeScript
+- Tailwind CSS
+- GSAP + Lenis (smooth scroll & section reveals)
+- Framer Motion (UI motion)
+- Base UI / shadcn components
+
+## Features
+
+- Full-bleed hero with auto-advancing slides
+- Editorial homepage sections (collections, product grids, lifestyle stories)
+- Cart and wishlist with toast feedback
+- Smooth scrolling and scroll-triggered reveals
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command         | Description              |
+| --------------- | ------------------------ |
+| `npm run dev`   | Start the dev server     |
+| `npm run build` | Create a production build |
+| `npm run start` | Serve the production build |
+| `npm run lint`  | Run ESLint               |
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/           # Routes (home, cart, wishlist)
+components/    # Page sections, UI, and motion helpers
+context/       # Cart and wishlist state
+lib/           # Shared utilities
+public/        # Static images and assets
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Design notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Typography pairs Cormorant Garamond (display) with Geist (UI). Spacing, type scale, and component patterns are documented in [`DESIGN_PATTERNS.md`](./DESIGN_PATTERNS.md).
